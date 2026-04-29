@@ -65,14 +65,10 @@ Nothing is ever written to `src/`. Everything lives in `.design-engine/`. You pr
 ## Install
 
 ```bash
-npx skills add design-engine
+npx skills add Bil0000/design-engine --skill design-engine
 ```
 
-Or in Claude Code:
-
-```
-/install-skill design-engine
-```
+Repo: https://github.com/Bil0000/design
 
 Verify:
 
