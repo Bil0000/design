@@ -1,0 +1,25 @@
+{
+  "version": "1",
+  "metadata": { "name": "enterprise" },
+  "primitive": {
+    "color": {
+      "grey-0": { "type": "color", "value": "oklch(1.000 0.000 0)" },
+      "grey-50": { "type": "color", "value": "oklch(0.985 0.003 245)" },
+      "grey-950": { "type": "color", "value": "oklch(0.090 0.005 245)" },
+      "accent-600": { "type": "color", "value": "oklch(0.500 0.180 245)" },
+      "accent-400": { "type": "color", "value": "oklch(0.690 0.180 245)" }
+    }
+  },
+  "semantic-light": {
+    "bg-base": { "type": "color", "value": "{primitive.color.grey-0}" },
+    "text-primary": { "type": "color", "value": "{primitive.color.grey-950}" },
+    "accent": { "type": "color", "value": "{primitive.color.accent-600}" }
+  },
+  "semantic-dark": {
+    "bg-base": { "type": "color", "value": "{primitive.color.grey-950}" },
+    "text-primary": { "type": "color", "value": "{primitive.color.grey-50}" },
+    "accent": { "type": "color", "value": "{primitive.color.accent-400}" }
+  },
+  "spacing": { "space-1":{"type":"number","value":4},"space-2":{"type":"number","value":8},"space-3":{"type":"number","value":12},"space-4":{"type":"number","value":16},"space-5":{"type":"number","value":20},"space-6":{"type":"number","value":24},"space-8":{"type":"number","value":32} },
+  "radius": { "radius-sm":{"type":"number","value":4},"radius-md":{"type":"number","value":4},"radius-lg":{"type":"number","value":6} }
+}

@@ -1,0 +1,89 @@
+/* minimal v1.0.0 — design-engine */
+:root {
+  --color-grey-0: oklch(1 0 0); --color-grey-50: oklch(0.985 0 0);
+  --color-grey-100: oklch(0.960 0 0); --color-grey-200: oklch(0.920 0 0);
+  --color-grey-300: oklch(0.840 0 0); --color-grey-400: oklch(0.700 0 0);
+  --color-grey-500: oklch(0.560 0 0); --color-grey-600: oklch(0.430 0 0);
+  --color-grey-700: oklch(0.330 0 0); --color-grey-800: oklch(0.230 0 0);
+  --color-grey-900: oklch(0.150 0 0); --color-grey-950: oklch(0.080 0 0);
+
+  --color-accent-500: oklch(0.500 0.140 22); --color-accent-600: oklch(0.430 0.140 22); --color-accent-700: oklch(0.350 0.120 22);
+
+  --color-success: oklch(0.500 0.130 145); --color-warning: oklch(0.640 0.150 65);
+  --color-error: oklch(0.480 0.190 22); --color-info: oklch(0.500 0.150 240);
+
+  --bg-base: var(--color-grey-0); --bg-surface: var(--color-grey-50); --bg-elevated: var(--color-grey-50);
+  --bg-overlay: var(--color-grey-100); --bg-inset: var(--color-grey-50);
+  --text-primary: var(--color-grey-950); --text-secondary: var(--color-grey-600);
+  --text-tertiary: var(--color-grey-400); --text-disabled: var(--color-grey-300);
+  --text-inverse: var(--color-grey-0); --text-link: var(--color-grey-950); --text-link-hover: var(--color-grey-600);
+  --border-subtle: var(--color-grey-100); --border-default: var(--color-grey-200);
+  --border-strong: var(--color-grey-400); --border-focus: oklch(0.430 0.140 22 / 0.6);
+  --accent: var(--color-grey-950); --accent-hover: var(--color-grey-700);
+  --accent-press: var(--color-grey-800); --accent-subtle: oklch(0 0 0 / 0.05); --accent-text: var(--color-grey-0);
+  --success: var(--color-success); --success-subtle: oklch(0.500 0.130 145 / 0.08); --success-text: oklch(0.380 0.110 145);
+  --warning: var(--color-warning); --warning-subtle: oklch(0.640 0.150 65 / 0.08); --warning-text: oklch(0.460 0.130 65);
+  --error: var(--color-error); --error-subtle: oklch(0.480 0.190 22 / 0.08); --error-text: oklch(0.380 0.170 22);
+  --info: var(--color-info); --info-subtle: oklch(0.500 0.150 240 / 0.08); --info-text: oklch(0.380 0.130 240);
+
+  --button-bg-primary: var(--accent); --button-bg-primary-hover: var(--accent-hover); --button-bg-primary-press: var(--accent-press);
+  --button-text-primary: var(--accent-text); --button-bg-secondary: transparent; --button-text-secondary: var(--text-primary);
+  --button-border-secondary: var(--text-primary); --button-bg-ghost: transparent; --button-bg-ghost-hover: var(--bg-overlay);
+  --button-text-ghost: var(--text-primary); --button-bg-destructive: var(--error); --button-text-destructive: var(--bg-base);
+  --input-bg: transparent; --input-text: var(--text-primary); --input-placeholder: var(--text-tertiary);
+  --input-border: var(--border-default); --input-border-focus: var(--text-primary); --input-border-error: var(--error);
+  --card-bg: transparent; --card-border: var(--border-default); --card-bg-hover: var(--bg-overlay);
+  --nav-bg: var(--bg-base); --nav-text: var(--text-secondary); --nav-text-active: var(--text-primary); --nav-bg-active: transparent;
+  --table-row-bg: var(--bg-base); --table-row-bg-hover: var(--bg-overlay); --table-header-bg: var(--bg-base); --table-cell-border: var(--border-subtle);
+  --badge-bg: transparent; --badge-text: var(--text-primary);
+  --modal-bg: var(--bg-base); --modal-overlay: oklch(1 0 0 / 0.85); --modal-border: var(--border-default); --toast-bg: var(--bg-base);
+
+  --font-display: "Inter Display", "Inter", system-ui, sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono:    "iA Writer Mono", "JetBrains Mono", monospace;
+
+  --text-xs: 13px; --text-xs-line: 1.55; --text-xs-tracking: 0.01em;
+  --text-sm: 15px; --text-sm-line: 1.55; --text-sm-tracking: 0;
+  --text-base: 17px; --text-base-line: 1.65; --text-base-tracking: -0.005em;
+  --text-lg: 22px; --text-lg-line: 1.4; --text-lg-tracking: -0.015em;
+  --text-xl: 29px; --text-xl-line: 1.25; --text-xl-tracking: -0.025em;
+  --text-2xl: 39px; --text-2xl-line: 1.1; --text-2xl-tracking: -0.035em;
+  --text-3xl: 52px; --text-3xl-line: 1.0; --text-3xl-tracking: -0.045em;
+  --text-4xl: 69px; --text-4xl-line: 0.95; --text-4xl-tracking: -0.05em;
+  --text-5xl: 92px; --text-5xl-line: 0.9; --text-5xl-tracking: -0.06em;
+
+  --space-0: 0; --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+  --space-24: 96px; --space-32: 128px; --space-48: 192px; --space-64: 256px;
+
+  --radius-none: 0; --radius-sm: 0; --radius-md: 2px; --radius-lg: 2px;
+  --radius-xl: 2px; --radius-2xl: 2px; --radius-full: 9999px;
+
+  --border-thin: 1px; --border-medium: 1px; --border-thick: 1.5px;
+
+  --shadow-xs: none; --shadow-sm: none; --shadow-md: none; --shadow-lg: none; --shadow-xl: none;
+  --shadow-focus: 0 0 0 2px oklch(0.430 0.140 22 / 0.4);
+
+  --duration-instant: 0ms; --duration-fast: 150ms; --duration-normal: 200ms;
+  --duration-slow: 300ms; --duration-deliberate: 500ms; --duration-spring: 400ms;
+
+  --easing-out: cubic-bezier(0, 0, 0.2, 1); --easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1); --easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dark, [data-theme="dark"] {
+  --bg-base: var(--color-grey-950); --bg-surface: var(--color-grey-900); --bg-elevated: var(--color-grey-900);
+  --bg-overlay: var(--color-grey-800); --bg-inset: var(--color-grey-950);
+  --text-primary: var(--color-grey-50); --text-secondary: var(--color-grey-400);
+  --text-tertiary: var(--color-grey-600); --text-disabled: var(--color-grey-700);
+  --text-inverse: var(--color-grey-950); --text-link: var(--color-grey-50); --text-link-hover: var(--color-grey-300);
+  --border-subtle: var(--color-grey-800); --border-default: var(--color-grey-700);
+  --border-strong: var(--color-grey-500); --border-focus: oklch(0.700 0.140 22 / 0.6);
+  --accent: var(--color-grey-50); --accent-hover: var(--color-grey-300);
+  --accent-press: var(--color-grey-200); --accent-subtle: oklch(1 0 0 / 0.06); --accent-text: var(--color-grey-950);
+  --modal-overlay: oklch(0 0 0 / 0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-fast: 0ms; --duration-normal: 0ms; --duration-slow: 0ms; --duration-deliberate: 0ms; --duration-spring: 0ms; }
+}

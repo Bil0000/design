@@ -1,0 +1,129 @@
+/* notion v1.0.0 — design-engine */
+
+:root {
+  --color-grey-0:   oklch(1.000 0.000 0);
+  --color-grey-50:  oklch(0.985 0.005 60);
+  --color-grey-100: oklch(0.965 0.008 60);
+  --color-grey-200: oklch(0.920 0.010 60);
+  --color-grey-300: oklch(0.840 0.012 60);
+  --color-grey-400: oklch(0.700 0.012 60);
+  --color-grey-500: oklch(0.560 0.012 60);
+  --color-grey-600: oklch(0.430 0.010 60);
+  --color-grey-700: oklch(0.330 0.010 60);
+  --color-grey-800: oklch(0.230 0.008 60);
+  --color-grey-900: oklch(0.160 0.006 60);
+  --color-grey-950: oklch(0.110 0.005 60);
+
+  --color-accent-50:  oklch(0.970 0.020 220);
+  --color-accent-100: oklch(0.940 0.040 220);
+  --color-accent-200: oklch(0.890 0.080 220);
+  --color-accent-300: oklch(0.810 0.110 220);
+  --color-accent-400: oklch(0.700 0.130 220);
+  --color-accent-500: oklch(0.620 0.140 220);
+  --color-accent-600: oklch(0.550 0.140 220);
+  --color-accent-700: oklch(0.470 0.130 220);
+  --color-accent-800: oklch(0.380 0.110 220);
+  --color-accent-900: oklch(0.300 0.090 220);
+  --color-accent-950: oklch(0.220 0.070 220);
+
+  --color-success: oklch(0.580 0.150 145);
+  --color-warning: oklch(0.720 0.165 65);
+  --color-error:   oklch(0.580 0.220 22);
+  --color-info:    oklch(0.620 0.140 220);
+
+  --color-chart-1: oklch(0.620 0.140 220);
+  --color-chart-2: oklch(0.700 0.150 65);
+  --color-chart-3: oklch(0.580 0.140 145);
+  --color-chart-4: oklch(0.700 0.130 95);
+  --color-chart-5: oklch(0.640 0.150 320);
+  --color-chart-6: oklch(0.700 0.150 30);
+  --color-chart-7: oklch(0.620 0.120 200);
+  --color-chart-8: oklch(0.500 0.012 60);
+
+  /* light defaults */
+  --bg-base: var(--color-grey-50); --bg-surface: var(--color-grey-0); --bg-elevated: var(--color-grey-0);
+  --bg-overlay: var(--color-grey-100); --bg-inset: var(--color-grey-100);
+  --text-primary: var(--color-grey-900); --text-secondary: var(--color-grey-600);
+  --text-tertiary: var(--color-grey-400); --text-disabled: var(--color-grey-300);
+  --text-inverse: var(--color-grey-0); --text-link: var(--color-accent-600); --text-link-hover: var(--color-accent-700);
+  --border-subtle: var(--color-grey-100); --border-default: var(--color-grey-200);
+  --border-strong: var(--color-grey-300); --border-focus: oklch(0.550 0.140 220 / 0.6);
+  --accent: var(--color-accent-600); --accent-hover: var(--color-accent-700);
+  --accent-press: var(--color-accent-800); --accent-subtle: oklch(0.550 0.140 220 / 0.10); --accent-text: var(--color-grey-0);
+  --success: var(--color-success); --success-subtle: oklch(0.580 0.150 145 / 0.10); --success-text: oklch(0.420 0.130 145);
+  --warning: var(--color-warning); --warning-subtle: oklch(0.720 0.165 65 / 0.10); --warning-text: oklch(0.500 0.140 65);
+  --error: var(--color-error); --error-subtle: oklch(0.580 0.220 22 / 0.10); --error-text: oklch(0.440 0.190 22);
+  --info: var(--color-info); --info-subtle: oklch(0.620 0.140 220 / 0.10); --info-text: oklch(0.420 0.120 220);
+
+  --button-bg-primary: var(--accent); --button-bg-primary-hover: var(--accent-hover); --button-bg-primary-press: var(--accent-press);
+  --button-text-primary: var(--accent-text); --button-bg-secondary: var(--bg-surface); --button-text-secondary: var(--text-primary);
+  --button-border-secondary: var(--border-default); --button-bg-ghost: transparent; --button-bg-ghost-hover: var(--bg-overlay);
+  --button-text-ghost: var(--text-primary); --button-bg-destructive: var(--error); --button-text-destructive: var(--error-text);
+  --input-bg: var(--bg-surface); --input-text: var(--text-primary); --input-placeholder: var(--text-tertiary);
+  --input-border: var(--border-default); --input-border-focus: var(--border-focus); --input-border-error: var(--error);
+  --card-bg: var(--bg-surface); --card-border: var(--border-subtle); --card-bg-hover: var(--bg-elevated);
+  --nav-bg: var(--bg-base); --nav-text: var(--text-secondary); --nav-text-active: var(--text-primary); --nav-bg-active: var(--bg-overlay);
+  --table-row-bg: var(--bg-surface); --table-row-bg-hover: var(--bg-overlay); --table-header-bg: var(--bg-base); --table-cell-border: var(--border-subtle);
+  --badge-bg: var(--bg-overlay); --badge-text: var(--text-primary);
+  --modal-bg: var(--bg-surface); --modal-overlay: oklch(0.110 0.005 60 / 0.45); --modal-border: var(--border-subtle); --toast-bg: var(--bg-surface);
+
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-display-serif: "Charter", "Iowan Old Style", "Lyon", Georgia, serif;
+  --font-body:    "Inter", system-ui, -apple-system, sans-serif;
+  --font-body-serif: "Charter", "Iowan Old Style", "Lyon", Georgia, serif;
+  --font-mono:    "iA Writer Mono", "JetBrains Mono", "Fira Code", monospace;
+
+  --text-xs: 12px;  --text-xs-line: 1.6;  --text-xs-tracking: 0.005em;
+  --text-sm: 14px;  --text-sm-line: 1.55; --text-sm-tracking: 0;
+  --text-base: 17px;--text-base-line: 1.7;--text-base-tracking: -0.005em;
+  --text-lg: 20px;  --text-lg-line: 1.5;  --text-lg-tracking: -0.015em;
+  --text-xl: 24px;  --text-xl-line: 1.35; --text-xl-tracking: -0.02em;
+  --text-2xl: 32px; --text-2xl-line: 1.2; --text-2xl-tracking: -0.025em;
+  --text-3xl: 44px; --text-3xl-line: 1.1; --text-3xl-tracking: -0.03em;
+  --text-4xl: 60px; --text-4xl-line: 1.0; --text-4xl-tracking: -0.04em;
+
+  --space-0: 0; --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px; --space-24: 96px; --space-32: 128px;
+
+  --radius-none: 0; --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --radius-xl: 12px; --radius-2xl: 20px; --radius-full: 9999px;
+
+  --border-thin: 1px; --border-medium: 1.5px; --border-thick: 2px;
+
+  --shadow-xs: 0 1px 2px 0 oklch(0.110 0.005 60 / 0.05);
+  --shadow-sm: 0 2px 4px -1px oklch(0.110 0.005 60 / 0.06), 0 1px 2px -1px oklch(0.110 0.005 60 / 0.04);
+  --shadow-md: 0 4px 12px -2px oklch(0.110 0.005 60 / 0.08), 0 2px 4px -2px oklch(0.110 0.005 60 / 0.04);
+  --shadow-lg: 0 12px 24px -4px oklch(0.110 0.005 60 / 0.10), 0 4px 8px -4px oklch(0.110 0.005 60 / 0.06);
+  --shadow-xl: 0 24px 48px -8px oklch(0.110 0.005 60 / 0.14), 0 8px 16px -8px oklch(0.110 0.005 60 / 0.08);
+  --shadow-focus: 0 0 0 3px oklch(0.550 0.140 220 / 0.30);
+
+  --duration-instant: 0ms; --duration-fast: 100ms; --duration-normal: 150ms;
+  --duration-slow: 250ms; --duration-deliberate: 400ms; --duration-spring: 350ms;
+
+  --easing-out:    cubic-bezier(0, 0, 0.2, 1);
+  --easing-in:     cubic-bezier(0.4, 0, 1, 1);
+  --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dark, [data-theme="dark"] {
+  --bg-base: var(--color-grey-950); --bg-surface: var(--color-grey-900); --bg-elevated: var(--color-grey-800);
+  --bg-overlay: var(--color-grey-700); --bg-inset: oklch(0.080 0.005 60);
+  --text-primary: var(--color-grey-50); --text-secondary: var(--color-grey-400);
+  --text-tertiary: var(--color-grey-600); --text-disabled: var(--color-grey-700);
+  --text-inverse: var(--color-grey-950); --text-link: var(--color-accent-400); --text-link-hover: var(--color-accent-300);
+  --border-subtle: var(--color-grey-800); --border-default: var(--color-grey-700);
+  --border-strong: var(--color-grey-600); --border-focus: oklch(0.700 0.130 220 / 0.6);
+  --accent: var(--color-accent-400); --accent-hover: var(--color-accent-300);
+  --accent-press: var(--color-accent-500); --accent-subtle: oklch(0.700 0.130 220 / 0.16); --accent-text: var(--color-grey-950);
+  --success: oklch(0.700 0.150 145); --success-subtle: oklch(0.700 0.150 145 / 0.12); --success-text: oklch(0.840 0.130 145);
+  --warning: oklch(0.770 0.165 65); --warning-subtle: oklch(0.770 0.165 65 / 0.12); --warning-text: oklch(0.870 0.140 65);
+  --error: oklch(0.640 0.220 22); --error-subtle: oklch(0.640 0.220 22 / 0.12); --error-text: oklch(0.780 0.180 22);
+  --info: oklch(0.700 0.140 220); --info-subtle: oklch(0.700 0.140 220 / 0.12); --info-text: oklch(0.820 0.130 220);
+
+  --shadow-xs: none; --shadow-sm: none; --shadow-md: none; --shadow-lg: none; --shadow-xl: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-fast: 0ms; --duration-normal: 0ms; --duration-slow: 0ms; --duration-deliberate: 0ms; --duration-spring: 0ms; }
+}

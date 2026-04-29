@@ -1,0 +1,28 @@
+{
+  "version": "1",
+  "metadata": { "name": "notion" },
+  "primitive": {
+    "color": {
+      "grey-0": { "type": "color", "value": "oklch(1.000 0.000 0)" },
+      "grey-50": { "type": "color", "value": "oklch(0.985 0.005 60)" },
+      "grey-100": { "type": "color", "value": "oklch(0.965 0.008 60)" },
+      "grey-900": { "type": "color", "value": "oklch(0.160 0.006 60)" },
+      "grey-950": { "type": "color", "value": "oklch(0.110 0.005 60)" },
+      "accent-500": { "type": "color", "value": "oklch(0.620 0.140 220)" },
+      "accent-600": { "type": "color", "value": "oklch(0.550 0.140 220)" }
+    }
+  },
+  "semantic-light": {
+    "bg-base":      { "type": "color", "value": "{primitive.color.grey-50}" },
+    "bg-surface":   { "type": "color", "value": "{primitive.color.grey-0}" },
+    "text-primary": { "type": "color", "value": "{primitive.color.grey-900}" },
+    "accent":       { "type": "color", "value": "{primitive.color.accent-600}" }
+  },
+  "semantic-dark": {
+    "bg-base":      { "type": "color", "value": "{primitive.color.grey-950}" },
+    "text-primary": { "type": "color", "value": "{primitive.color.grey-50}" },
+    "accent":       { "type": "color", "value": "{primitive.color.accent-500}" }
+  },
+  "spacing": { "space-1":{"type":"number","value":4},"space-2":{"type":"number","value":8},"space-3":{"type":"number","value":12},"space-4":{"type":"number","value":16},"space-6":{"type":"number","value":24},"space-8":{"type":"number","value":32} },
+  "radius": { "radius-md":{"type":"number","value":6},"radius-lg":{"type":"number","value":8},"radius-xl":{"type":"number","value":12} }
+}

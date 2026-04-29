@@ -1,0 +1,135 @@
+/* mobile-ios v1.0.0 — design-engine */
+:root {
+  --color-grey-0: oklch(1.000 0.000 0); --color-grey-50: oklch(0.985 0.000 0);
+  --color-grey-100: oklch(0.960 0.000 0); --color-grey-200: oklch(0.920 0.000 0);
+  --color-grey-300: oklch(0.840 0.000 0); --color-grey-400: oklch(0.700 0.000 0);
+  --color-grey-500: oklch(0.560 0.000 0); --color-grey-600: oklch(0.430 0.000 0);
+  --color-grey-700: oklch(0.330 0.000 0); --color-grey-800: oklch(0.230 0.000 0);
+  --color-grey-900: oklch(0.160 0.000 0); --color-grey-950: oklch(0.100 0.000 0);
+
+  --color-system-blue:   oklch(0.620 0.190 250);
+  --color-system-green:  oklch(0.700 0.180 145);
+  --color-system-orange: oklch(0.760 0.180 60);
+  --color-system-red:    oklch(0.620 0.220 22);
+  --color-system-yellow: oklch(0.840 0.150 95);
+  --color-system-purple: oklch(0.560 0.180 290);
+  --color-system-pink:   oklch(0.700 0.180 350);
+  --color-system-teal:   oklch(0.700 0.130 200);
+  --color-system-indigo: oklch(0.500 0.180 270);
+
+  /* light defaults */
+  --bg-base: var(--color-grey-50); --bg-surface: var(--color-grey-0);
+  --bg-elevated: var(--color-grey-0); --bg-overlay: var(--color-grey-100); --bg-grouped: var(--color-grey-50);
+  --label-primary: var(--color-grey-950); --label-secondary: oklch(0.430 0 0 / 0.6);
+  --label-tertiary: oklch(0.430 0 0 / 0.3); --label-quaternary: oklch(0.430 0 0 / 0.18);
+  --fill-primary: oklch(0.430 0 0 / 0.20); --fill-secondary: oklch(0.430 0 0 / 0.16);
+  --fill-tertiary: oklch(0.430 0 0 / 0.12); --fill-quaternary: oklch(0.430 0 0 / 0.08);
+  --separator: oklch(0.430 0 0 / 0.36); --separator-opaque: var(--color-grey-300);
+  --border-focus: oklch(0.620 0.190 250 / 0.5);
+
+  --accent: var(--color-system-blue); --accent-text: var(--color-grey-0);
+  --success: var(--color-system-green); --warning: var(--color-system-orange);
+  --error: var(--color-system-red); --info: var(--color-system-blue);
+
+  /* aliasing common semantic names for cross-system compatibility */
+  --text-primary: var(--label-primary);
+  --text-secondary: var(--label-secondary);
+  --text-tertiary: var(--label-tertiary);
+  --text-disabled: var(--label-quaternary);
+  --text-inverse: var(--color-grey-0);
+  --text-link: var(--accent);
+  --border-subtle: var(--separator);
+  --border-default: var(--separator-opaque);
+  --border-strong: var(--color-grey-400);
+  --accent-hover: oklch(0.560 0.190 250);
+  --accent-press: oklch(0.500 0.180 250);
+  --accent-subtle: oklch(0.620 0.190 250 / 0.10);
+  --success-subtle: oklch(0.700 0.180 145 / 0.10);
+  --success-text: oklch(0.420 0.150 145);
+  --warning-subtle: oklch(0.760 0.180 60 / 0.10);
+  --warning-text: oklch(0.500 0.150 60);
+  --error-subtle: oklch(0.620 0.220 22 / 0.10);
+  --error-text: oklch(0.440 0.190 22);
+  --info-subtle: oklch(0.620 0.190 250 / 0.10);
+  --info-text: oklch(0.420 0.150 250);
+
+  --button-bg-primary: var(--accent); --button-bg-primary-hover: var(--accent-hover); --button-bg-primary-press: var(--accent-press);
+  --button-text-primary: var(--accent-text); --button-bg-secondary: var(--fill-tertiary); --button-text-secondary: var(--accent);
+  --button-border-secondary: transparent; --button-bg-ghost: transparent; --button-bg-ghost-hover: var(--fill-quaternary);
+  --button-text-ghost: var(--accent); --button-bg-destructive: var(--error); --button-text-destructive: var(--color-grey-0);
+  --input-bg: var(--fill-quaternary); --input-text: var(--label-primary); --input-placeholder: var(--label-tertiary);
+  --input-border: transparent; --input-border-focus: var(--border-focus); --input-border-error: var(--error);
+  --card-bg: var(--bg-surface); --card-border: var(--separator); --card-bg-hover: var(--bg-elevated);
+  --nav-bg: var(--bg-base); --nav-text: var(--label-secondary); --nav-text-active: var(--accent); --nav-bg-active: transparent;
+  --table-row-bg: var(--bg-surface); --table-row-bg-hover: var(--bg-overlay); --table-header-bg: var(--bg-base); --table-cell-border: var(--separator);
+  --badge-bg: var(--fill-tertiary); --badge-text: var(--label-primary);
+  --modal-bg: var(--bg-elevated); --modal-overlay: oklch(0 0 0 / 0.4); --modal-border: var(--separator); --toast-bg: var(--bg-elevated);
+  --tabbar-bg: var(--bg-base); --navbar-bg: var(--bg-base);
+
+  --font-display: -apple-system, "SF Pro Display", "Inter Display", system-ui, sans-serif;
+  --font-body:    -apple-system, "SF Pro Text", "Inter", system-ui, sans-serif;
+  --font-rounded: -apple-system-ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", "JetBrains Mono", monospace;
+
+  /* iOS type scale */
+  --text-caption-2: 11px;  --text-caption-2-line: 1.27; --text-caption-2-tracking: 0.005em;
+  --text-caption-1: 12px;  --text-caption-1-line: 1.33; --text-caption-1-tracking: 0;
+  --text-footnote: 13px;   --text-footnote-line: 1.38;  --text-footnote-tracking: -0.005em;
+  --text-subhead: 15px;    --text-subhead-line: 1.33;   --text-subhead-tracking: -0.01em;
+  --text-callout: 16px;    --text-callout-line: 1.31;   --text-callout-tracking: -0.015em;
+  --text-body: 17px;       --text-body-line: 1.29;      --text-body-tracking: -0.022em;
+  --text-headline: 17px;   --text-headline-line: 1.29;  --text-headline-tracking: -0.022em;
+  --text-title-3: 20px;    --text-title-3-line: 1.25;   --text-title-3-tracking: -0.022em;
+  --text-title-2: 22px;    --text-title-2-line: 1.27;   --text-title-2-tracking: -0.026em;
+  --text-title-1: 28px;    --text-title-1-line: 1.21;   --text-title-1-tracking: -0.022em;
+  --text-large-title: 34px;--text-large-title-line: 1.21; --text-large-title-tracking: -0.022em;
+
+  --space-0: 0; --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+
+  --radius-none: 0; --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+  --radius-xl: 20px; --radius-2xl: 28px; --radius-full: 9999px;
+
+  --border-thin: 0.5px; --border-medium: 1px; --border-thick: 2px;
+  --touch-min: 44px;
+
+  --shadow-xs: 0 1px 1px 0 oklch(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.08);
+  --shadow-md: 0 4px 12px 0 oklch(0 0 0 / 0.10);
+  --shadow-lg: 0 12px 32px 0 oklch(0 0 0 / 0.14);
+  --shadow-xl: 0 24px 48px 0 oklch(0 0 0 / 0.16);
+  --shadow-focus: 0 0 0 4px oklch(0.620 0.190 250 / 0.30);
+
+  --blur-thin:        blur(20px) saturate(180%);
+  --blur-regular:     blur(40px) saturate(180%);
+  --blur-thick:       blur(60px) saturate(180%);
+  --blur-ultra-thin:  blur(10px) saturate(180%);
+
+  --duration-instant: 0ms; --duration-fast: 150ms; --duration-normal: 250ms;
+  --duration-slow: 350ms; --duration-deliberate: 500ms; --duration-spring: 550ms;
+
+  --easing-out:    cubic-bezier(0, 0, 0.2, 1);
+  --easing-in:     cubic-bezier(0.4, 0, 1, 1);
+  --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-spring: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.dark, [data-theme="dark"] {
+  --bg-base: var(--color-grey-950); --bg-surface: var(--color-grey-900);
+  --bg-elevated: var(--color-grey-800); --bg-overlay: var(--color-grey-700); --bg-grouped: oklch(0 0 0);
+  --label-primary: var(--color-grey-0); --label-secondary: oklch(0.940 0 0 / 0.6);
+  --label-tertiary: oklch(0.940 0 0 / 0.3); --label-quaternary: oklch(0.940 0 0 / 0.18);
+  --fill-primary: oklch(0.940 0 0 / 0.36); --fill-secondary: oklch(0.940 0 0 / 0.32);
+  --fill-tertiary: oklch(0.940 0 0 / 0.24); --fill-quaternary: oklch(0.940 0 0 / 0.18);
+  --separator: oklch(0.940 0 0 / 0.65); --separator-opaque: var(--color-grey-700);
+  --border-focus: oklch(0.700 0.190 250 / 0.6);
+  --accent: oklch(0.700 0.190 250); --accent-text: var(--color-grey-0);
+  --success: oklch(0.760 0.180 145); --warning: oklch(0.820 0.180 60);
+  --error: oklch(0.700 0.220 22); --info: oklch(0.700 0.190 250);
+
+  --shadow-xs: none; --shadow-sm: none; --shadow-md: none; --shadow-lg: none; --shadow-xl: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-fast: 0ms; --duration-normal: 0ms; --duration-slow: 0ms; --duration-deliberate: 0ms; --duration-spring: 0ms; }
+}

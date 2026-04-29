@@ -1,0 +1,22 @@
+{
+  "version": "1",
+  "metadata": { "name": "minimal" },
+  "primitive": {
+    "color": {
+      "grey-0": { "type": "color", "value": "oklch(1.000 0.000 0)" },
+      "grey-50": { "type": "color", "value": "oklch(0.985 0 0)" },
+      "grey-950": { "type": "color", "value": "oklch(0.080 0 0)" },
+      "accent-500": { "type": "color", "value": "oklch(0.500 0.140 22)" }
+    }
+  },
+  "semantic-light": {
+    "bg-base": { "type": "color", "value": "{primitive.color.grey-0}" },
+    "text-primary": { "type": "color", "value": "{primitive.color.grey-950}" }
+  },
+  "semantic-dark": {
+    "bg-base": { "type": "color", "value": "{primitive.color.grey-950}" },
+    "text-primary": { "type": "color", "value": "{primitive.color.grey-50}" }
+  },
+  "spacing": { "space-1":{"type":"number","value":4},"space-4":{"type":"number","value":16},"space-8":{"type":"number","value":32},"space-16":{"type":"number","value":64},"space-32":{"type":"number","value":128},"space-48":{"type":"number","value":192},"space-64":{"type":"number","value":256} },
+  "radius": { "radius-none":{"type":"number","value":0},"radius-md":{"type":"number","value":2} }
+}

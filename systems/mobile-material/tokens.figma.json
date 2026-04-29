@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "metadata": { "name": "mobile-material" },
+  "primitive": {
+    "color": {
+      "neutral-10": { "type": "color", "value": "oklch(0.110 0.005 250)" },
+      "neutral-99": { "type": "color", "value": "oklch(0.985 0.003 250)" },
+      "primary-40": { "type": "color", "value": "oklch(0.420 0.140 280)" },
+      "primary-80": { "type": "color", "value": "oklch(0.810 0.110 280)" },
+      "secondary-40": { "type": "color", "value": "oklch(0.420 0.070 220)" },
+      "tertiary-40": { "type": "color", "value": "oklch(0.420 0.090 30)" },
+      "error-40": { "type": "color", "value": "oklch(0.420 0.200 22)" }
+    }
+  },
+  "semantic-light": {
+    "primary":      { "type": "color", "value": "{primitive.color.primary-40}" },
+    "background":   { "type": "color", "value": "{primitive.color.neutral-99}" },
+    "surface":      { "type": "color", "value": "{primitive.color.neutral-99}" },
+    "on-surface":   { "type": "color", "value": "{primitive.color.neutral-10}" }
+  },
+  "semantic-dark": {
+    "primary":      { "type": "color", "value": "{primitive.color.primary-80}" },
+    "background":   { "type": "color", "value": "{primitive.color.neutral-10}" },
+    "surface":      { "type": "color", "value": "{primitive.color.neutral-10}" }
+  },
+  "spacing": { "space-1":{"type":"number","value":4},"space-2":{"type":"number","value":8},"space-4":{"type":"number","value":16},"space-6":{"type":"number","value":24},"space-8":{"type":"number","value":32} },
+  "radius": { "radius-sm":{"type":"number","value":8},"radius-md":{"type":"number","value":12},"radius-lg":{"type":"number","value":16},"radius-xl":{"type":"number","value":28} },
+  "touch": { "touch-min":{"type":"number","value":48} }
+}

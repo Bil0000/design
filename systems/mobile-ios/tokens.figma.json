@@ -1,0 +1,27 @@
+{
+  "version": "1",
+  "metadata": { "name": "mobile-ios" },
+  "primitive": {
+    "color": {
+      "grey-0": { "type": "color", "value": "oklch(1.000 0.000 0)" },
+      "grey-950": { "type": "color", "value": "oklch(0.100 0.000 0)" },
+      "system-blue": { "type": "color", "value": "oklch(0.620 0.190 250)" },
+      "system-green": { "type": "color", "value": "oklch(0.700 0.180 145)" },
+      "system-red": { "type": "color", "value": "oklch(0.620 0.220 22)" },
+      "system-orange": { "type": "color", "value": "oklch(0.760 0.180 60)" }
+    }
+  },
+  "semantic-light": {
+    "label-primary": { "type": "color", "value": "{primitive.color.grey-950}" },
+    "bg-base":       { "type": "color", "value": "oklch(0.985 0 0)" },
+    "accent":        { "type": "color", "value": "{primitive.color.system-blue}" }
+  },
+  "semantic-dark": {
+    "label-primary": { "type": "color", "value": "{primitive.color.grey-0}" },
+    "bg-base":       { "type": "color", "value": "{primitive.color.grey-950}" },
+    "accent":        { "type": "color", "value": "oklch(0.700 0.190 250)" }
+  },
+  "spacing": { "space-1":{"type":"number","value":4},"space-2":{"type":"number","value":8},"space-3":{"type":"number","value":12},"space-4":{"type":"number","value":16},"space-5":{"type":"number","value":20},"space-6":{"type":"number","value":24} },
+  "radius": { "radius-md":{"type":"number","value":10},"radius-lg":{"type":"number","value":14},"radius-xl":{"type":"number","value":20} },
+  "touch": { "touch-min":{"type":"number","value":44} }
+}

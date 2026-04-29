@@ -1,0 +1,59 @@
+{
+  "version": "1",
+  "metadata": { "name": "raycast", "tokenSetOrder": ["primitive", "semantic-light", "semantic-dark", "component", "spacing", "radius", "motion"] },
+  "primitive": {
+    "color": {
+      "grey-0": { "type": "color", "value": "oklch(1.000 0.000 0)" },
+      "grey-50": { "type": "color", "value": "oklch(0.980 0.003 260)" },
+      "grey-100": { "type": "color", "value": "oklch(0.950 0.005 260)" },
+      "grey-200": { "type": "color", "value": "oklch(0.900 0.008 260)" },
+      "grey-300": { "type": "color", "value": "oklch(0.795 0.011 260)" },
+      "grey-400": { "type": "color", "value": "oklch(0.640 0.014 260)" },
+      "grey-500": { "type": "color", "value": "oklch(0.490 0.014 260)" },
+      "grey-600": { "type": "color", "value": "oklch(0.370 0.013 260)" },
+      "grey-700": { "type": "color", "value": "oklch(0.270 0.011 260)" },
+      "grey-800": { "type": "color", "value": "oklch(0.180 0.009 260)" },
+      "grey-900": { "type": "color", "value": "oklch(0.130 0.007 260)" },
+      "grey-950": { "type": "color", "value": "oklch(0.090 0.005 260)" },
+      "accent-500": { "type": "color", "value": "oklch(0.700 0.220 25)" },
+      "accent-600": { "type": "color", "value": "oklch(0.620 0.215 25)" },
+      "accent-700": { "type": "color", "value": "oklch(0.520 0.190 25)" },
+      "success": { "type": "color", "value": "oklch(0.700 0.155 145)" },
+      "warning": { "type": "color", "value": "oklch(0.770 0.165 65)" },
+      "error":   { "type": "color", "value": "oklch(0.620 0.220 22)" },
+      "info":    { "type": "color", "value": "oklch(0.680 0.170 240)" }
+    }
+  },
+  "semantic-dark": {
+    "bg-base":   { "type": "color", "value": "{primitive.color.grey-950}" },
+    "bg-surface":{ "type": "color", "value": "oklch(0.130 0.007 260 / 0.85)" },
+    "bg-elevated":{"type": "color", "value": "oklch(0.180 0.009 260 / 0.92)" },
+    "text-primary": { "type": "color", "value": "{primitive.color.grey-50}" },
+    "border-subtle":{ "type": "color", "value": "{primitive.color.grey-800}" },
+    "accent": { "type": "color", "value": "{primitive.color.accent-500}" }
+  },
+  "semantic-light": {
+    "bg-base": { "type": "color", "value": "{primitive.color.grey-0}" },
+    "text-primary": { "type": "color", "value": "oklch(0.130 0.007 260)" },
+    "accent": { "type": "color", "value": "{primitive.color.accent-600}" }
+  },
+  "component": {
+    "modal-overlay": { "type": "color", "value": "oklch(0 0 0 / 0.55)" },
+    "card-bg":       { "type": "color", "value": "{semantic-dark.bg-surface}" }
+  },
+  "spacing": {
+    "space-0":{"type":"number","value":0},"space-1":{"type":"number","value":4},"space-2":{"type":"number","value":8},
+    "space-3":{"type":"number","value":12},"space-4":{"type":"number","value":16},"space-6":{"type":"number","value":24},
+    "space-8":{"type":"number","value":32},"space-12":{"type":"number","value":48},"space-16":{"type":"number","value":64},
+    "space-24":{"type":"number","value":96},"space-32":{"type":"number","value":128}
+  },
+  "radius": {
+    "radius-none":{"type":"number","value":0},"radius-sm":{"type":"number","value":4},
+    "radius-md":{"type":"number","value":6},"radius-lg":{"type":"number","value":8},
+    "radius-xl":{"type":"number","value":12},"radius-2xl":{"type":"number","value":16},"radius-full":{"type":"number","value":9999}
+  },
+  "motion": {
+    "duration-fast":{"type":"number","value":100},"duration-normal":{"type":"number","value":120},
+    "duration-slow":{"type":"number","value":200},"duration-deliberate":{"type":"number","value":350}
+  }
+}
