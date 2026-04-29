@@ -106,10 +106,10 @@ To ship, `cp` from `.design-engine/handoff/` into your project.
 
 | Command | Output | Typical use |
 |---|---|---|
-| `/design web` | system + canvas + prototype + handoff | SaaS, dashboards, internal tools |
-| `/design mobile` | system + canvas + prototype + handoff (mobile frame) | iOS or Android native |
+| `/design web` | system + canvas + prototype + handoff | SaaS, dashboards, internal tools — supports `--annotate` |
+| `/design mobile` | system + canvas + prototype + handoff (mobile frame) | iOS or Android native — supports `--annotate` |
 | `/design system` | system files + interactive preview | Brand-new system, or system-only flow |
-| `/design landing` | landing page, full-bleed, optional ambient gradient | Marketing site, hero, pricing |
+| `/design landing` | landing page, full-bleed, optional ambient gradient | Marketing site, hero, pricing — supports `--annotate` |
 | `/design review` | critique only | Score an existing design |
 | `/design import` | pulls from Figma → system files | Start from a Figma file |
 | `/design redraw` | screenshot → composition + handoff | Convert UI screenshot to code |
@@ -117,12 +117,40 @@ To ship, `cp` from `.design-engine/handoff/` into your project.
 Every command (except `system` / `review`) asks output mode:
 
 ```
-[C] Canvas     Figma-style layout, all screens side-by-side, annotations
+[C] Canvas     Figma-style layout, all screens side-by-side (clean by default)
 [P] Prototype  Fully clickable, real navigation, Playwright-verified
 [B] Both       Canvas first → approve → Prototype built from it (default)
 ```
 
 In **Both** mode, prototype generation is gated on canvas approval. Mark each screen Looks good / Needs work in the canvas, reply `approve all`, prototype runs.
+
+---
+
+## Canvas Options
+
+By default canvas output is clean — no overlays, no callout boxes,
+no annotation labels. The design stands alone.
+
+To add design decision annotations (useful for internal reviews or
+developer handoff walkthroughs):
+
+```
+/design web --annotate
+```
+
+Annotations appear in a dedicated strip BELOW each screen frame —
+never on top of the UI. Each callout is numbered and maps to an
+element in the screen above it.
+
+```
+/design web --annotate --redlines
+```
+
+Adds spacing redlines as a second layer on top of `--annotate`.
+Redlines show exact px measurements between elements.
+
+Without `--annotate`, none of these appear.
+The canvas looks exactly as a client or stakeholder would see it.
 
 ---
 

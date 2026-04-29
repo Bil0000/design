@@ -210,6 +210,17 @@ Critique (15) flags violations and blocks handoff if any are present.
 - Tailwind arbitrary values when a token exists
 - Inline styles on production components
 - `outline: none` without a replacement focus indicator
+- Annotation overlays, callout boxes, tooltip badges, label overlays,
+  off-token chips, component name pills, or any explanatory text
+  rendered on top of canvas or prototype screens. Annotations are OFF
+  by default. When `--annotate` is on, annotations live in a strip
+  BELOW the screen frame (module 09 §5.1), NOT on top of the design.
+  The screen at all times must be fully visible and unobstructed.
+  Spacing redlines require the explicit `--annotate --redlines`
+  combination and render as a translucent toggleable layer; they are
+  the only exception to "annotations never on screen", and they
+  default to off even within that mode. See module 09 §0 Clean Canvas
+  Rule.
 
 ### ALWAYS generate
 

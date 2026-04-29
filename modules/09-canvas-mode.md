@@ -8,7 +8,7 @@ Inputs: brief, system tokens, component library, screen list. Output
 dir: `.design-engine/canvas/<timestamp>/`. Output file:
 `canvas.html` (self-contained, opens in any browser).
 
-Two binding rules govern this module:
+Three binding rules govern this module:
 
 > **Canvas always runs first in Both mode.** Module 10 (prototype) is
 > blocked until the user has marked every section of the canvas.
@@ -17,6 +17,89 @@ Two binding rules govern this module:
 > inspector, and feedback markers belong to canvas chrome only — they
 > never leak into the screens themselves and they are stripped on
 > export.
+>
+> **Annotations are OFF by default.** No green borders, callout boxes,
+> tooltip badges, label overlays, or explanatory text render on top
+> of screen content. Canvas output must look client-presentable with
+> zero scaffolding visible. Annotations only activate when the user
+> explicitly passes the `--annotate` flag. See §0 Clean Canvas Rule.
+
+---
+
+## 0. Clean Canvas Rule
+
+The design must stand alone without explanation. If it needs labels
+to be understood, the design failed — not the annotation system.
+
+### 0.1 Default state
+
+```
+Annotations:        OFF
+Redline overlays:   OFF
+Inspector panel:    HIDDEN
+Off-token markers:  collected silently to annotations.json (no UI)
+Component legend:   HIDDEN
+Feedback markers:   shown (this is the canvas's review purpose)
+```
+
+The canvas opens looking like a Figma frames row a designer would
+hand to a client. Screens, device frames, screen titles, feedback
+buttons. Nothing else.
+
+### 0.2 What is NEVER rendered on top of screens — in ANY mode
+
+```
+✗ Green / red / blue borders around elements
+✗ Callout boxes pointing at UI
+✗ Tooltip overlays describing components
+✗ Label badges naming tokens or components floating over the design
+✗ "off-token" warning chips on top of content
+✗ Component name pills overlaid on elements
+✗ Inspector breadcrumbs floating on screen
+✗ Token reference labels overlaid on elements
+✗ Any text or visual element that obscures, covers, or sits ON TOP
+  of screen content — even when --annotate is on
+```
+
+Hard placement rule, applies to every mode including `--annotate`:
+
+> **Annotations NEVER overlay screen content. They live in a
+> dedicated strip BELOW the screen frame.** The screen at all times
+> must be fully visible and unobstructed. If a pointer is needed
+> to associate a callout with an element, it is a thin line
+> originating in the annotation strip pointing UP to the element —
+> never a box, border, or fill drawn ON the element.
+
+Spacing redlines (padding/margin/gap measurement overlays) are the
+ONE exception — they sit on the screen by necessity. They are
+gated by a separate flag: `--annotate --redlines` together. Default
+`--annotate` does NOT enable redlines.
+
+Module 15 (critique) §3.8 greps for any of the forbidden overlays
+appearing inside screen DOM and flags as a hard defect — regardless
+of mode.
+
+### 0.3 The `--annotate` flag
+
+Annotations re-enable only when explicitly requested:
+
+```
+/design web                         clean canvas (default — no strip, no redlines)
+/design web --annotate              annotation strip BELOW each screen (§5)
+/design web --annotate --redlines   strip + measurement redlines on screens
+```
+
+Equivalent message-level toggles: "show annotations" / "annotate the
+canvas" → enables the strip. "Show redlines" / "show spacing" →
+enables the redline overlay (requires annotations on first).
+
+Without the flag, no strip renders, no redlines render. Inspector
+and component legend are also gated to `--annotate`.
+
+### 0.4 Persistence
+
+Per session. The flag does not persist to `.design-engine.json`. Each
+canvas generation starts clean unless `--annotate` is passed again.
 
 ---
 
@@ -113,7 +196,7 @@ Two layout requirements:
 
 ### 4.1 Per-screen frame
 
-Each screen card contains, top to bottom:
+Each screen card contains, top to bottom (default — clean canvas):
 
 ```
 ┌────────────────────────────────┐
@@ -121,7 +204,7 @@ Each screen card contains, top to bottom:
 │  Web · 1440 × 900 · default    │  meta line
 ├────────────────────────────────┤
 │ ╭────────────────────────────╮ │
-│ │  device frame (per type)   │ │  screen-frame
+│ │  device frame (per type)   │ │  screen-frame  (NEVER touched)
 │ │  ╭─────────────────╮       │ │
 │ │  │   iframe        │       │ │
 │ │  │   the actual UI │       │ │
@@ -132,6 +215,35 @@ Each screen card contains, top to bottom:
 │  notes ___________________     │  collapses to single row when neutral
 └────────────────────────────────┘
 ```
+
+When `--annotate` is on, an **annotation strip slots BELOW the
+screen-frame and ABOVE the screen-feedback footer** — never inside
+or on top of the frame:
+
+```
+┌────────────────────────────────┐
+│  01 · Dashboard                │  screen-header
+├────────────────────────────────┤
+│ ╭────────────────────────────╮ │
+│ │  device frame (per type)   │ │  screen-frame  (clean — numbered
+│ │  ╭─────────────────╮       │ │   markers ① ② ③ are tiny, only
+│ │  │   the actual UI │       │ │   present when --annotate, and
+│ │  ╰─────────────────╯       │ │   sit at element top-right corner
+│ ╰────────────────────────────╯ │   inside their own absolute layer
+├────────────────────────────────┤   that NEVER overlaps content)
+│  ANNOTATIONS                   │  annotation-strip  (§5)
+│  ① Tension graph — single …   │
+│  ② Activity table — sticky …  │
+│  ③ Sidebar nav — sliding …    │
+├────────────────────────────────┤
+│  [✓ Looks good]  [✗ Needs work]│  screen-feedback
+└────────────────────────────────┘
+```
+
+The strip is part of the screen-card chrome, not part of the screen
+itself. Print mode (§10.1) and PNG export (§10) strip the
+annotation-strip + feedback footer + header — exports show only the
+device frame contents.
 
 ### 4.2 Device frame selection
 
@@ -200,52 +312,135 @@ canvas wrapper script writes the attribute on iframe load.
 
 ---
 
-## 5. Annotation System (Hover Redlines)
+## 5. Annotation System — Strip Below Frame
 
-The differentiator that makes the canvas useful for review.
+Opt-in only via `--annotate`. Disabled by default per §0 Clean Canvas
+Rule.
 
-### 5.1 Trigger
+The hard placement rule (restating §0.2):
 
-The user moves the cursor over any element inside an iframe. The
-canvas chrome listens for messages from the iframe (via `postMessage`)
-and overlays redlines.
+> Annotations live in a strip BELOW the screen frame. The screen at
+> all times must be fully visible and unobstructed. Never overlay
+> annotations on top of screen content.
 
-### 5.2 Overlay rendering
+### 5.1 The annotation strip — placement + structure
 
-Redlines are drawn on a `<canvas>` element absolutely positioned over
-the iframe. They show:
-
-```
-- Outer dimensions     (width × height in px) — top of the element
-- Padding              (4 sides, in px) — inside the element
-- Margin               (4 sides, in px) — outside the element
-- Gap                  (when the element is a flex/grid container with children)
-- Distance to nearest siblings (left + right, top + bottom)
-```
-
-Color coding (drawn from system tokens, not hardcoded):
+When `--annotate` is on, each screen card gets an annotation strip
+slotted between the screen-frame and the screen-feedback footer
+(§4.1). Strip width matches the card width. Strip height is
+content-driven (typically 120–280px).
 
 ```
-Outer dimension  oklch(<accent> / 0.6)   1px solid line + label
-Padding fill     oklch(<warning> / 0.15) translucent
-Margin fill      oklch(<error> / 0.10)   translucent
-Gap fill         oklch(<info> / 0.20)    translucent
+.screen-card
+  > .screen-header
+  > .screen-frame              ← clean, untouched UI
+  > .annotation-strip          ← THIS — added only when --annotate
+      > h4 ANNOTATIONS
+      > ol.callout-list
+          > li.callout
+              .callout-marker     ① (matching the marker on the frame)
+              .callout-element    "Tension graph"
+              .callout-decision   "Single bar per person, not a grid.
+                                   Reveals overlap at a glance."
+              .callout-token      "Uses --color-focus-high oklch(0.72 0.15 95)"
+  > .screen-feedback           ← Looks good / Needs work
 ```
 
-Each measurement label is a small chip rendered above the relevant
-edge with the token reference shown when possible:
+Background: `bg-surface`. Border-top: 1px `border-subtle`. Padding
+`space-4`. Type body 14px, callouts 13px to compress.
+
+### 5.2 Callout format — the canonical entry
+
+Each callout is one line that scans top-to-bottom:
 
 ```
-24px  →  space-6
+① Tension graph — single bar per person, not grid.
+  Reveals overlap at a glance.
+  Uses --color-focus-high oklch(0.72 0.15 95)
 ```
 
-If the value snaps to a token, show the token name; otherwise show
-the raw value with a yellow "off-token" warning marker.
+Four parts, in order:
 
-### 5.3 Iframe → canvas communication
+```
+1. Marker         ① ② ③ ...    — circled number, system mono font
+2. Element name   "Tension graph", "Activity table", "Sidebar nav"
+3. Design decision  one short sentence on what was decided AND why
+4. Token used     "Uses --token-name oklch(...)" or "Uses {token-name}"
+                  — exact CSS variable + resolved value
+```
 
-The screen HTML is generated with a small inlined script that, on
-mouseover, posts:
+If a callout doesn't reference a token (e.g. it describes a layout
+decision), part 4 is omitted. Never invent a token reference to fill
+the slot.
+
+Maximum 5 callouts per screen. If a screen needs more, the design is
+not standing on its own — split the screen into sections with their
+own cards.
+
+### 5.3 Optional: tiny element marker on the frame
+
+A circled number marker (e.g. `①`) MAY appear at the top-right
+corner of the element being called out, inside an absolute layer
+that sits above the iframe but is constrained to a 16×16px square
+in the corner. The marker:
+
+```
+✓ 16 × 16 px circle
+✓ accent bg, accent-text fg, system mono numeral
+✓ Always at element top-right corner; never centered, never large
+✓ NEVER covers content the user needs to read
+✓ Hover the marker → strip's matching callout highlights briefly
+```
+
+The marker is the ONLY thing allowed inside the iframe's overlay
+layer in `--annotate` mode. No callout boxes, no tooltip text, no
+borders. If the element is too small to host a 16×16 marker without
+covering content, the marker is omitted and the strip callout drops
+its number prefix (just `—` instead of `①`).
+
+### 5.4 Inline pointer line (optional)
+
+When the spatial relationship between callout and element is
+unclear from the marker alone, render a thin 1px line:
+
+```
+- Origin: top edge of the matching callout in the strip
+- Target: bottom-right of the marker on the frame
+- Path:   straight line, 1px, oklch(<text-tertiary>) at 60% opacity
+- NEVER crosses screen content — line stays in the gutter between
+  the screen-frame and the strip
+```
+
+If a line would have to cross the frame to reach the element, the
+line is omitted. The marker carries the association.
+
+### 5.5 Spacing redlines — separate flag, separate layer
+
+Padding/margin/gap measurement overlays sit on the screen by
+necessity. They are NOT enabled by `--annotate` alone. They require
+the explicit two-flag combination:
+
+```
+/design web --annotate --redlines
+```
+
+Or message: "show redlines" (after annotations already on).
+
+When both flags are active:
+- Redlines render as a translucent overlay layer per the spec in the
+  earlier version of §5.2 (color-coded fills + measurement chips).
+- The redline layer is toggleable in the topbar with a `[redlines ⊟]`
+  button — default OFF inside that mode too. User clicks to reveal.
+- The strip-based callouts (§5.1–5.4) remain primary; redlines are
+  diagnostic detail summoned on demand.
+
+The screen-frame's child UI is NEVER permanently obscured. Redlines
+are translucent, dismissible, and gated behind two opt-ins.
+
+### 5.6 Iframe → canvas communication (when redlines on)
+
+The screen HTML is generated with a small inlined script that posts
+on hover, used only when redlines are active:
 
 ```js
 window.parent.postMessage({
@@ -259,46 +454,50 @@ window.parent.postMessage({
     gap: el.style.gap || getComputedStyle(el).gap,
     siblings: { /* nearest sibling rects */ }
   },
-  tokens: dataAttrToTokenMap(el)   // see §6.3
+  tokens: dataAttrToTokenMap(el)
 }, "*");
 ```
 
-The canvas script reads the message, transforms coordinates from
-iframe-local to canvas-global (via the iframe's bounding rect), and
-draws the overlay. On `mouseout` the overlay clears.
+When redlines are off, the listener is not attached.
 
-### 5.4 Pin / unpin
+### 5.7 Pin / unpin — strip mode
 
-Clicking on an element in any iframe pins the annotation. A pinned
-element keeps its overlay visible even after the cursor moves and
-populates the inspector (§6). Clicking the same element again unpins.
-The canvas scripts maintain a single pinned element across all
-iframes.
+In annotation strip mode, "pinning" applies to the strip-callout
+relationship: clicking a callout in the strip scrolls the screen to
+center the corresponding element and pulses the marker. Clicking
+again resets. No element-level overlays appear from this action —
+only the marker pulse + scroll.
 
-### 5.5 Redline toggle
+### 5.8 Off-token detection
 
-A button in the topbar toggles redlines globally on / off. Default:
-on. Off is useful when the reviewer wants to evaluate the design
-without measurement chrome distracting them.
+Off-token values are collected silently in `annotations.json`
+regardless of mode (critique module 15 §3.7 reads this).
 
-### 5.6 Off-token detection
-
-For every measurement reported, the canvas compares against the
-system's token scale. If the value isn't an exact token (e.g.
-`padding: 17px`), show:
+In `--annotate` mode without redlines: off-token findings appear as
+a list at the bottom of the annotation strip:
 
 ```
-17px  off-token  ⚠
+OFF-TOKEN VALUES
+  • padding 17px on .header (closest stop: space-4 / 16px)
+  • gap 14px on .filters    (closest stop: space-3 / 12px)
 ```
 
-These get logged to `annotations.json` so module 15 (critique) can
-flag them too.
+In `--annotate --redlines` mode: an off-token chip appears next to
+the redline measurement. Never as a free-floating chip on top of
+content outside the redline overlay.
+
+In default mode: no UI. The data is captured, the visual is
+suppressed entirely.
 
 ---
 
-## 6. Inspector Panel
+## 6. Inspector Panel — opt-in only
 
-### 6.1 Layout
+Hidden by default per §0 Clean Canvas Rule. Renders only when
+`--annotate` flag is passed. Without the flag, the canvas DOM omits
+the inspector entirely.
+
+### 6.1 Layout (when enabled)
 
 A 320px-wide panel docked to the right edge of the canvas. Always
 visible on viewports ≥ 1440px; collapses to a slide-in drawer below
@@ -434,10 +633,14 @@ above the group so the user can approve the whole section at once.
 
 ---
 
-## 8. Component Legend (Bottom)
+## 8. Component Legend (Bottom) — opt-in only
 
-A horizontal strip at the bottom of the canvas listing every component
-that appears anywhere in the screens.
+Hidden by default per §0 Clean Canvas Rule. Renders only when
+`--annotate` flag is passed. Without the flag, the canvas omits the
+legend strip and the bottom of the canvas is just whitespace.
+
+When enabled: a horizontal strip at the bottom of the canvas listing
+every component that appears anywhere in the screens.
 
 ```
 COMPONENTS USED
@@ -458,9 +661,28 @@ populated as screens are generated.
 
 ## 9. Topbar Controls
 
+Default (clean canvas):
+
 ```
 ┌─ {brief.product} — Canvas ──────────────────────────────────────────┐
-│  [theme toggle] [size 1440 ▾] [redline ⊟] [reviewed 5/8] [export ▾] │
+│  [theme toggle] [size 1440 ▾] [reviewed 5/8] [export ▾]             │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+With `--annotate` (strip below each frame):
+
+```
+┌─ {brief.product} — Canvas ──────────────────────────────────────────┐
+│  [theme toggle] [size 1440 ▾] [reviewed 5/8] [export ▾]             │
+└─────────────────────────────────────────────────────────────────────┘
+   (no extra topbar control — strips are part of the cards)
+```
+
+With `--annotate --redlines`:
+
+```
+┌─ {brief.product} — Canvas ──────────────────────────────────────────┐
+│  [theme toggle] [size 1440 ▾] [redlines ⊟] [reviewed 5/8] [export ▾]│
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -468,7 +690,8 @@ populated as screens are generated.
 - **Size**: 375 / 768 / 1024 / 1440. Resizes the iframes via
   `--screen-width`. Iframes use the responsive design of the screens
   they hold; the device frame switches to mobile frames at ≤ 480.
-- **Redline toggle**: §5.5.
+- **Redlines toggle** (only when `--annotate --redlines` was passed):
+  §5.5. Default OFF inside that mode — user clicks to reveal.
 - **Reviewed counter**: §7.3.
 - **Export menu**: §10.
 
@@ -503,10 +726,12 @@ Push to Figma           Copies `claude /design system push` snippet to
 
 ### 10.1 Print mode
 
-`canvas.html?print=true` strips chrome (topbar, inspector,
-component legend, feedback footers, redlines) and lays the screens
-out for clean PDF export. Restores on reload without the query
-parameter.
+`canvas.html?print=true` strips ALL chrome (topbar, inspector if
+present, component legend if present, feedback footers, redlines if
+on) and lays the screens out for clean PDF export. Restores on reload
+without the query parameter. Note: default canvas is already mostly
+chrome-free per §0 Clean Canvas Rule, so print mode mainly removes
+feedback footers + topbar.
 
 ---
 

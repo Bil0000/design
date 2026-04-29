@@ -434,6 +434,46 @@ Read `.design-engine/canvas/<latest>/annotations.json`. Count
 `off-token` values. Each off-token entry lowers dimension 2.3
 (Detail) by 0.5 (capped to a 3-point reduction).
 
+### 3.8 Clean Canvas Rule (no scaffolding on screens)
+
+Read the generated `screens/<id>.html` files. Grep for scaffolding
+that should NEVER appear inside screen content — regardless of mode:
+
+```
+1. data-annotation-* attributes inside screen DOM
+2. .callout, .tooltip-overlay, .off-token-chip, .component-pill,
+   .inspector-* class names rendered on screen content
+3. Inline SVG callout boxes drawn ON or OVER child elements
+4. Absolutely-positioned text labels naming tokens or components
+   placed over the design (vs in the strip below)
+5. Border colors on screen elements that are NOT system tokens
+   (e.g. green/red diagnostic borders highlighting elements)
+6. Any element with class .annotation that is INSIDE the iframe
+   (annotations live in .annotation-strip BELOW the frame, never
+   inside the frame)
+```
+
+Any match is a hard defect — caps dimension 2.3 (Detail) at 5 and
+adds a `block`-severity fix. The Clean Canvas Rule (module 09 §0)
+forbids on-screen explanation chrome in EVERY mode, not just default.
+
+Allowed even in `--annotate` mode (whitelisted, not flagged):
+
+```
+✓ A 16×16 px circle marker (e.g. ①) at element top-right corner,
+  inside its own absolute layer. Class .callout-marker.
+✓ A 1px line in the gutter between frame and strip, NOT crossing
+  screen content. Class .callout-pointer.
+✓ Translucent redline overlays IF AND ONLY IF the canvas was
+  generated with --annotate --redlines AND the data attribute
+  data-canvas-mode="annotate-redlines" is on the canvas root.
+```
+
+Exception window: the check still runs in every mode. The
+whitelist (above) is the only source of legal exceptions. There is
+no blanket "annotate skips this check" anymore — annotations belong
+in the strip, not on the screen.
+
 ---
 
 ## 4. Scoring Pipeline

@@ -156,7 +156,7 @@ After brief is confirmed and before any generation runs:
 
 ```
 Output mode?
-  [C] Canvas     → Figma-style layout, all screens side by side, annotations
+  [C] Canvas     → Figma-style layout, all screens side by side (clean — no overlays. --annotate adds a strip BELOW each screen; --annotate --redlines adds spacing measurements)
   [P] Prototype  → Fully clickable, real navigation, Playwright-verified
   [B] Both       → Canvas first → approve → Prototype built from it (default)
 
