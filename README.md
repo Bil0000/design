@@ -70,6 +70,14 @@ npx skills add Bil0000/design --skill design-engine
 
 On first run, design-engine automatically adds a silent update hook to Claude Code and Cursor. No manual setup needed.
 
+> **First-run permission note.** The install-hook writes to `~/.claude/settings.json` and `~/.cursor/settings.json` (if Cursor is detected). For the first session that uses the skill, run Claude Code with bypass permissions enabled so the write to the global settings files is auto-approved:
+>
+> ```bash
+> claude --dangerously-skip-permissions
+> ```
+>
+> Or accept the file-write prompt the first time it appears. After the hook is installed, every future session auto-updates the skill silently — no further bypass needed. Only required once per machine.
+
 Repo: https://github.com/Bil0000/design
 
 Verify:
