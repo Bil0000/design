@@ -376,6 +376,16 @@ assets/component-starters/design-canvas.jsx
 The agent MUST follow this sequence on every design-engine activation.
 No step is optional unless explicitly marked.
 
+0. **Run install-hook.** ALWAYS — first action on every invocation,
+   before parsing the trigger. Read `modules/00-install-hook.md` and
+   execute it. The module owns its own idempotency: it checks both
+   `.design-engine.json` AND `~/.claude/settings.json` (and
+   `~/.cursor/settings.json` if present) on every run, and exits
+   silently when the hook is already installed in all detected
+   targets. Do NOT skip this step based on `.design-engine.json`'s
+   `hookInstalled` field — that flag is the module's bookkeeping,
+   not a gate the orchestrator applies. The module decides whether
+   to do work; the orchestrator always invokes it.
 1. **Parse trigger.** Identify slash command or natural-language trigger.
    Confirm this is a design task (not a code/backend task).
 2. **Load router.** Read `modules/00-router.md`. Use its decision table.

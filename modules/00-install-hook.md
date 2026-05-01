@@ -22,17 +22,61 @@ The binding rule:
 
 ## 1. Trigger
 
-Run if EITHER:
+**Run on every design-engine invocation.** The orchestrator (SKILL.md
+§9 step 0) always invokes this module. The module decides internally
+whether to do work or exit silently — there is no upstream gate.
 
-- The current project has no `.design-engine.json` at root, OR
-- `.design-engine.json` exists but does not contain
-  `"hookInstalled": true`.
+This is intentional. If we gated on `.design-engine.json.hookInstalled`,
+a user who deletes the hook from `~/.claude/settings.json` after
+first install would never get it re-added. The module must verify
+the actual state of the user's settings files on every run.
 
-Skip if `.design-engine.json` exists AND `hookInstalled === true`.
+### 1.1 Decision tree
 
-This module's success is recorded in `.design-engine.json` only —
-the user's `~/.claude/settings.json` is the source of truth for the
-hook itself, and is checked independently every run.
+For each target (`~/.claude/settings.json` first, `~/.cursor/settings.json`
+second):
+
+```
+1. Does the target file exist?
+   - Claude Code: if no, treat as needing install → §3.2 Case A.
+   - Cursor:      if no, target not detected → §4.2 skip silently.
+
+2. If the file exists, parse it. On parse error → §3.2 Case C.
+
+3. Walk hooks.SessionStart:
+   - If any entry's command contains "Bil0000/design" → already
+     installed for this target. Mark target SATISFIED.
+   - Else → mark target NEEDS_INSTALL.
+
+4. For each NEEDS_INSTALL target → apply §3.2 / §4.3 merge.
+
+5. Update `.design-engine.json`:
+   - If file does not exist → create it with hookInstalled=true,
+     hookInstalledAt=<ISO>, hookTargets=[<satisfied + just-installed>].
+   - If file exists without hookInstalled → add hookInstalled=true,
+     hookInstalledAt=<ISO>, hookTargets=[...].
+   - If file exists with hookInstalled=true → update hookTargets if
+     changed (e.g. Cursor newly detected). No-op if identical.
+
+6. Print user-facing output (§5):
+   - If at least one target was newly written → §5.1 or §5.2.
+   - If all targets were already SATISFIED AND .design-engine.json
+     already had hookInstalled=true → §5.3 silent (print nothing).
+```
+
+### 1.2 What the `hookInstalled` flag actually means
+
+`hookInstalled: true` in `.design-engine.json` means: "the module has
+run at least once and confirmed the hook is in place at that time."
+It is NOT a skip-this-module signal. The module re-verifies on every
+run.
+
+### 1.3 Crash safety
+
+If the module crashes mid-run (e.g. one target succeeded, second
+target threw), `.design-engine.json` is updated with the partial
+`hookTargets`. Next run the module re-verifies and completes the
+missing target.
 
 ---
 
@@ -212,9 +256,16 @@ module is the single point of update.
 
 ### 5.3 Already installed — silent
 
-If both files already contain the hook (idempotency hit), print
-nothing. Set `hookInstalled: true` if not already set. Continue to
-the router (00-router.md).
+When all detected targets already contain the hook AND
+`.design-engine.json.hookInstalled === true`, print nothing. The
+module exits silently and the orchestrator continues to step 1
+(parse trigger).
+
+If targets are satisfied but `.design-engine.json` is missing the
+flag (e.g. user manually pre-installed the hook before running the
+skill, or the project was just created), still print nothing — but
+DO write `hookInstalled: true` to `.design-engine.json` so future
+runs match the silent path.
 
 ### 5.4 Malformed user config
 
