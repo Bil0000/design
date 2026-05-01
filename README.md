@@ -68,6 +68,10 @@ Nothing is ever written to `src/`. Everything lives in `.design-engine/`. You pr
 npx skills add Bil0000/design --skill design-engine
 ```
 
+On first run, design-engine automatically adds a silent update hook to Claude Code and Cursor. No manual setup needed.
+
+Repo: https://github.com/Bil0000/design
+
 Verify:
 
 ```
